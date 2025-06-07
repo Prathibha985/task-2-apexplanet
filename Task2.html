@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Intermediate HTML, CSS, JS Project</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    header, main {
+      width: 100%;
+      max-width: 900px;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+    }
+
+    .form-section, .todo-section {
+      margin-top: 30px;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      background: #f9f9f9;
+    }
+
+    form {
+      display: grid;
+      gap: 10px;
+    }
+
+    input, button {
+      padding: 10px;
+      font-size: 1em;
+    }
+
+    .todo-section ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .todo-section li {
+      display: flex;
+      justify-content: space-between;
+      background: #e0e0e0;
+      padding: 8px;
+      margin-top: 5px;
+      border-radius: 5px;
+    }
+
+    @media (max-width: 600px) {
+      header {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Contact & To-Do App</h1>
+    <p>Responsive layout with validation and DOM manipulation</p>
+  </header>
+
+  <main>
+    <!-- Contact Form -->
+    <section class="form-section">
+      <h2>Contact Form</h2>
+      <form id="contactForm">
+        <input type="text" id="name" placeholder="Your Name" required />
+        <input type="email" id="email" placeholder="Your Email" required />
+        <button type="submit">Submit</button>
+        <p id="formMsg" style="color: green;"></p>
+      </form>
+    </section>
+
+    <!-- To-Do List -->
+    <section class="todo-section">
+      <h2>Dynamic To-Do List</h2>
+      <input type="text" id="todoInput" placeholder="Add a task..." />
+      <button onclick="addTodo()">Add Task</button>
+      <ul id="todoList"></ul>
+    </section>
+  </main>
+
+  <script>
+    // JavaScript Form Validation
+    document.getElementById('contactForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const name = document.getElementById('name').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const msg = document.getElementById('formMsg');
+
+      if (name === '' || email === '') {
+        msg.style.color = 'red';
+        msg.textContent = 'Please fill in all fields.';
+      } else if (!/^\S+@\S+\.\S+$/.test(email)) {
+        msg.style.color = 'red';
+        msg.textContent = 'Please enter a valid email.';
+      } else {
+        msg.style.color = 'green';
+        msg.textContent = 'Form submitted successfully!';
+      }
+    });
+
+    // To-Do List JavaScript
+    function addTodo() {
+      const input = document.getElementById('todoInput');
+      const task = input.value.trim();
+      if (task === '') return;
+
+      const li = document.createElement('li');
+      li.textContent = task;
+
+      const btn = document.createElement('button');
+      btn.textContent = 'Remove';
+      btn.onclick = () => li.remove();
+
+      li.appendChild(btn);
+      document.getElementById('todoList').appendChild(li);
+      input.value = '';
+    }
+  </script>
+</body>
+</html>
